@@ -1,5 +1,5 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-Hello!
+Hello {{  app.user ? ', ' ~ app.user.username : null }}
 {% endblock %}
