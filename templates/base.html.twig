@@ -1,12 +1,70 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-    </head>
-    <body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('build/app.css') }}"/>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{% block navbar %}
+    <div class="container">
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+        <div class="navbar-brand">
+            <a class="navbar-item" href="#">
+                My App
+            </a>
+
+            <button class="button navbar-burger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+        <div class="navbar-menu">
+            <div class="navbar-start">
+                <a class="navbar-item" href="#">Home</a>
+            </div>
+            <div class="navbar-end">
+                {% if (app.user) %}
+                    <div class="dropdown is-hoverable is-right">
+                        <div class="dropdown-trigger">
+                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu">
+                                <span>{{ app.user.username }}</span>
+                                <span class="icon is-small">
+        <i class="fa fa-angle-down" aria-hidden="true"></i>
+      </span>
+                            </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                            <div class="dropdown-content">
+                                <a href="#" class="dropdown-item">
+                                    Profile
+                                </a>
+                                <hr class="dropdown-divider">
+                                <a href="/logout" class="dropdown-item">
+                                    Logout
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <a class="navbar-item" href="/login">Login</a>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+    </div>
+{% endblock %}
+
+<section class="section">
+    <div class="container">
         {% block body %}{% endblock %}
+        <script src="{{ asset('build/app.js') }}"></script>
         {% block javascripts %}{% endblock %}
-    </body>
+    </div>
+</section>
+</body>
 </html>

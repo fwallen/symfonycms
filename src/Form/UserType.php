@@ -18,20 +18,34 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class)
-            ->add('username', TextType::class)
-            ->add('plainPassword', RepeatedType::class, array(
-                'type' => PasswordType::class,
-                'first_options'  => array('label' => 'Password'),
-                'second_options' => array('label' => 'Repeat Password'),
-            ))
-        ;
+            ->add('email', EmailType::class, [
+                'attr' => ['class' => 'input'],
+                'label_attr' => ['class' => 'label']
+            ])
+            ->add('username', TextType::class, [
+                'attr' => ['class' => 'input'],
+                'label_attr' => ['class' => 'label']
+            ])
+            ->add('plainPassword', RepeatedType::class, [
+                'type'           => PasswordType::class,
+                'first_options'  => [
+                    'label' => 'Password',
+                    'attr' => ['class' => 'input'],
+                    'label_attr' => ['class' => 'label']
+                ],
+                'second_options' => [
+                    'label' => 'Repeat Password',
+                    'attr' => ['class' => 'input'],
+                    'label_attr' => ['class' => 'label']
+                ],
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => User::class,
-        ));
+            'csrf_protection'=>true,
+        ]);
     }
 }

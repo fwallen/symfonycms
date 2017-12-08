@@ -1,14 +1,12 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+<h1 class="title">Register New User</h1>
     {{ form_start(form) }}
-    {{ form_row(form.username) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.plainPassword.first) }}
-    {{ form_row(form.plainPassword.second) }}
-
-    <button type="submit">Register!</button>
+    {{ form_widget(form) }}
+    <div class="control">
+        <button type="submit" class="button is-primary">Register!</button>
+    </div>
     {{ form_end(form) }}
 
 {% endblock %}
