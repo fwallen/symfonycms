@@ -2,23 +2,23 @@
 
 namespace App\Repository;
 
-use App\Entity\Page;
+use App\Entity\Content;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
-class PageRepository extends ServiceEntityRepository
+class ContentRepository extends ServiceEntityRepository
 {
     public function __construct(RegistryInterface $registry)
     {
-        parent::__construct($registry, Page::class);
+        parent::__construct($registry, Content::class);
     }
 
     /*
     public function findBySomething($value)
     {
-        return $this->createQueryBuilder('p')
-            ->where('p.something = :value')->setParameter('value', $value)
-            ->orderBy('p.id', 'ASC')
+        return $this->createQueryBuilder('c')
+            ->where('c.something = :value')->setParameter('value', $value)
+            ->orderBy('c.id', 'ASC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()

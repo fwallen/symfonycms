@@ -10,10 +10,9 @@
 </head>
 <body>
 {% block navbar %}
-    <div class="container">
     <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
-            <a class="navbar-item" href="#">
+            <a class="navbar-item" href="/">
                 My App
             </a>
 
@@ -25,7 +24,7 @@
         </div>
         <div class="navbar-menu">
             <div class="navbar-start">
-                <a class="navbar-item" href="#">Home</a>
+                <a class="navbar-item" href="{{ path('home') }}">Home</a>
             </div>
             <div class="navbar-end">
                 {% if (app.user) %}
@@ -40,6 +39,9 @@
                         </div>
                         <div class="dropdown-menu" id="dropdown-menu" role="menu">
                             <div class="dropdown-content">
+                                {% if (app.user.hasRole('ROLE_ADMIN')) %}
+                                    <a href="/admin" class="dropdown-item">Admin</a>
+                                {% endif %}
                                 <a href="#" class="dropdown-item">
                                     Profile
                                 </a>
@@ -56,15 +58,12 @@
             </div>
         </div>
     </nav>
-    </div>
 {% endblock %}
 
 <section class="section">
-    <div class="container">
         {% block body %}{% endblock %}
         <script src="{{ asset('build/app.js') }}"></script>
         {% block javascripts %}{% endblock %}
-    </div>
 </section>
 </body>
 </html>
