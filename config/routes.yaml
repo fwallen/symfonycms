@@ -2,13 +2,10 @@
 #    path: /
 #    defaults: { _controller: 'App\Controller\DefaultController::index' }
 
-home:
-    path: /
-    controller: App\Controller\HomeController::index
 
 admin:
     path: /admin
-    controller: App\Controller\HomeController::admin
+    controller: App\Admin\Controller\AdminController::index
 
 login:
     path: /login
@@ -17,6 +14,14 @@ login:
 logout:
     path: /logout
 
-use_registration:
+user_registration:
     path: /register
     controller: App\Controller\RegistrationController::registerAction
+
+content_path:
+    path: /{slug}
+    controller: App\Controller\ContentController::index
+
+home:
+    path: /
+    controller: App\Controller\HomeController::index

@@ -13,9 +13,4 @@ class HomeController extends Controller
     {
         return $this->render('home.html.twig');
     }
-
-    public function admin()
-    {
-        return $this->render('admin/admin.html.twig');
-    }
 }

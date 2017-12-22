@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Traits\Timestampable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -12,9 +13,12 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
+ * @ORM\HasLifecycleCallbacks()
  */
 class User implements UserInterface, \Serializable
 {
+    use Timestampable;
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -47,9 +51,24 @@ class User implements UserInterface, \Serializable
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=128, nullable=true)
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=128, nullable=true)
+     */
+    private $lastName;
+
+    /**
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+
+    /**
+     * @ORM\Column(type="datetime",name="deleted_at",nullable=true)
+     */
+    private $deletedAt;
 
     public function __construct()
     {
@@ -178,5 +197,10 @@ class User implements UserInterface, \Serializable
     public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
+    }
+
+    public function hasRole($role)
+    {
+        return in_array($role,$this->getRoles());
     }
 }
