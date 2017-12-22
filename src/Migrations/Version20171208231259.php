@@ -16,7 +16,7 @@ class Version20171208231259 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('CREATE TABLE content (id INT AUTO_INCREMENT NOT NULL, title VARCHAR(255) NOT NULL, summary VARCHAR(400) DEFAULT NULL, body LONGTEXT DEFAULT NULL, status VARCHAR(65) NOT NULL, is_published TINYINT(1) DEFAULT \'1\' NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME DEFAULT NULL, deleted_at DATETIME DEFAULT NULL, UNIQUE INDEX UNIQ_FEC530A92B36786B (title), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE users ADD first_name VARCHAR(128) DEFAULT NULL, ADD last_name VARCHAR(128) DEFAULT NULL, ADD created_at DATETIME NOT NULL, ADD updated_at DATETIME NOT NULL, ADD deleted_at DATETIME NOT NULL');
+        $this->addSql('ALTER TABLE users ADD first_name VARCHAR(128) DEFAULT NULL, ADD last_name VARCHAR(128) DEFAULT NULL, ADD created_at DATETIME NOT NULL, ADD updated_at DATETIME DEFAULT NULL, ADD deleted_at DATETIME DEFAULT NULL');
     }
 
     public function down(Schema $schema)

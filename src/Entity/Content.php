@@ -16,6 +16,13 @@ class Content
     use Timestampable;
 
     /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=255, unique=true)

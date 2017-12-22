@@ -7,14 +7,6 @@ namespace App\Entity\Traits;
 trait Timestampable
 {
 
-
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
-
     /**
      * @var \DateTime
      *
