@@ -198,4 +198,9 @@ class User implements UserInterface, \Serializable
     {
         $this->isActive = $isActive;
     }
+
+    public function hasRole($role)
+    {
+        return in_array($role,$this->getRoles());
+    }
 }
