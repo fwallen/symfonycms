@@ -47,9 +47,34 @@ class User implements UserInterface, \Serializable
     private $email;
 
     /**
+     * @ORM\Column(type="string", length=128, nullable=true)
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=128, nullable=true)
+     */
+    private $lastName;
+
+    /**
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+
+    /**
+     * @ORM\Column(type="datetime",name="created_at")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime",name="updated_at")
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\Column(type="datetime",name="deleted_at")
+     */
+    private $deletedAt;
 
     public function __construct()
     {
