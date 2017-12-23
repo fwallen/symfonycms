@@ -1,4 +1,7 @@
 {
+    "dnoegel/php-xdg-base-dir": {
+        "version": "0.1"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -59,8 +62,17 @@
     "fzaninotto/faker": {
         "version": "v1.7.1"
     },
+    "jakub-onderka/php-console-color": {
+        "version": "0.1"
+    },
+    "jakub-onderka/php-console-highlighter": {
+        "version": "v0.3.2"
+    },
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
+    },
+    "nikic/php-parser": {
+        "version": "v3.1.2"
     },
     "ocramius/package-versions": {
         "version": "1.2.0"
@@ -79,6 +91,9 @@
     },
     "psr/simple-cache": {
         "version": "1.0.0"
+    },
+    "psy/psysh": {
+        "version": "v0.8.16"
     },
     "sensio/framework-extra-bundle": {
         "version": "4.0",
@@ -130,6 +145,9 @@
     },
     "symfony/event-dispatcher": {
         "version": "v3.4.0"
+    },
+    "symfony/expression-language": {
+        "version": "v4.0.2"
     },
     "symfony/filesystem": {
         "version": "v3.4.0"
@@ -280,6 +298,9 @@
     },
     "symfony/yaml": {
         "version": "v3.4.0"
+    },
+    "theofidry/psysh-bundle": {
+        "version": "v3.3.0"
     },
     "twig/twig": {
         "version": "v2.4.4"

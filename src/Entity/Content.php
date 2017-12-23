@@ -46,6 +46,13 @@ class Content
     /**
      * @var string
      *
+     * @ORM\Column(type="string", length=400, nullable=true)
+     */
+    private $path;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=65)
      */
     private $status;
@@ -223,6 +230,24 @@ class Content
     public function setDeletedAt( \DateTime $deletedAt ): Content
     {
         $this->deletedAt = $deletedAt;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path
+     * @return Content
+     */
+    public function setPath( string $path ): Content
+    {
+        $this->path = $path;
         return $this;
     }
 

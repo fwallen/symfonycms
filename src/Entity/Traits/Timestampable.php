@@ -17,7 +17,7 @@ trait Timestampable
     /**
      * @var \DateTime
      *
-     * @ORM\Column(type="datetime", name="updated_at")
+     * @ORM\Column(type="datetime", name="updated_at", nullable=true)
      */
     private $updatedAt;
 
