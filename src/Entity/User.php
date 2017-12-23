@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\Timestampable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -20,7 +21,7 @@ class User implements UserInterface, \Serializable
     use Timestampable;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="bigint")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -66,6 +67,17 @@ class User implements UserInterface, \Serializable
     private $isActive;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Role")
+     * @ORM\JoinTable(name="user_roles",
+     *     joinColumns={@ORM\JoinColumn(name="user_id",referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="role_id",referencedColumnName="id")}
+     *     )
+     */
+    private $roles;
+
+    /**
      * @ORM\Column(type="datetime",name="deleted_at",nullable=true)
      */
     private $deletedAt;
@@ -73,8 +85,7 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
-        // may not be needed, see section on salt below
-        // $this->salt = md5(uniqid('', true));
+        $this->roles = new ArrayCollection();
     }
 
     /**
@@ -112,7 +123,11 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        $roles = $this->roles->map(function($role) {
+            return $role->getName();
+        })->toArray();
+
+        return $roles;
     }
 
     public function eraseCredentials()
@@ -202,5 +217,95 @@ class User implements UserInterface, \Serializable
     public function hasRole($role)
     {
         return in_array($role,$this->getRoles());
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getCreatedAt(): \DateTime
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     * @return User
+     */
+    public function setCreatedAt( \DateTime $createdAt ): User
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     * @return User
+     */
+    public function setUpdatedAt( \DateTime $updatedAt ): User
+    {
+        $this->updatedAt = $updatedAt;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param mixed $firstName
+     * @return User
+     */
+    public function setFirstName( $firstName )
+    {
+        $this->firstName = $firstName;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param mixed $lastName
+     * @return User
+     */
+    public function setLastName( $lastName )
+    {
+        $this->lastName = $lastName;
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * @param mixed $deletedAt
+     * @return User
+     */
+    public function setDeletedAt( $deletedAt )
+    {
+        $this->deletedAt = $deletedAt;
+        return $this;
     }
 }
