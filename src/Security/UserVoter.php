@@ -22,7 +22,7 @@ class UserVoter extends Voter
 
     protected function voteOnAttribute( $attribute, $subject, TokenInterface $token )
     {
-        return $attribute == 'ROLE';
+        return true;
     }
 
 }
