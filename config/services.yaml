@@ -31,3 +31,8 @@ services:
         class: App\Security\UserVoter
         tags:
             - { name: security.voter }
+
+    fixture_admin:
+        class: App\DataFixtures\AdminFixture
+        tags:
+            - { name: doctrine.fixture.orm }

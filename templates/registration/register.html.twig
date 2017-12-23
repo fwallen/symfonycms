@@ -1,6 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    <div class="container">
 <h1 class="title">Register New User</h1>
     {{ form_start(form) }}
     {{ form_widget(form) }}
@@ -8,5 +9,5 @@
         <button type="submit" class="button is-primary">Register!</button>
     </div>
     {{ form_end(form) }}
-
+    </div>
 {% endblock %}

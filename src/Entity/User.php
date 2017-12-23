@@ -88,26 +88,7 @@ class User implements UserInterface, \Serializable
         $this->roles = new ArrayCollection();
     }
 
-    /**
-     * @param mixed $username
-     */
-    public function setUsername($username)
-    {
-        $this->username = $username;
-    }
 
-    /**
-     * @param mixed $password
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
-    }
-
-    public function getUsername()
-    {
-        return $this->username;
-    }
 
     public function getSalt()
     {
@@ -175,14 +156,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param mixed $plainPassword
-     */
-    public function setPlainPassword($plainPassword)
-    {
-        $this->plainPassword = $plainPassword;
-    }
-
-    /**
      * @return mixed
      */
     public function getEmail()
@@ -191,27 +164,11 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param mixed $email
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    }
-
-    /**
      * @return mixed
      */
     public function getisActive()
     {
         return $this->isActive;
-    }
-
-    /**
-     * @param mixed $isActive
-     */
-    public function setIsActive($isActive)
-    {
-        $this->isActive = $isActive;
     }
 
     public function hasRole($role)
@@ -308,4 +265,75 @@ class User implements UserInterface, \Serializable
         $this->deletedAt = $deletedAt;
         return $this;
     }
+
+    /**
+     * @param mixed $id
+     * @return User
+     */
+    public function setId( $id )
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @param mixed $username
+     * @return User
+     */
+    public function setUsername( $username )
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+     * @param mixed $password
+     * @return User
+     */
+    public function setPassword( $password )
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     * @return User
+     */
+    public function setPlainPassword( $plainPassword )
+    {
+        $this->plainPassword = $plainPassword;
+        return $this;
+    }
+
+    /**
+     * @param mixed $email
+     * @return User
+     */
+    public function setEmail( $email )
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * @param mixed $isActive
+     * @return User
+     */
+    public function setIsActive( $isActive )
+    {
+        $this->isActive = $isActive;
+        return $this;
+    }
+
+    public function getUsername()
+    {
+       return $this->username;
+    }
+
+    public function addRole(Role $role)
+    {
+        $this->roles->add($role);
+    }
+
 }

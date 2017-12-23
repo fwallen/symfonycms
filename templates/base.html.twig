@@ -39,7 +39,7 @@
                         </div>
                         <div class="dropdown-menu" id="dropdown-menu" role="menu">
                             <div class="dropdown-content">
-                                {% if (app.user.hasRole('ROLE_ADMIN')) %}
+                                {% if (is_granted('ROLE_ADMIN')) %}
                                     <a href="/admin" class="dropdown-item">Admin</a>
                                 {% endif %}
                                 <a href="#" class="dropdown-item">
