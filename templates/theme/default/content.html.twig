@@ -2,7 +2,23 @@
 
 {% block body %}
 
-    <div class="title">{{ content.title }}</div>
+    {% if (content) %}
+        <div class="title">{{ content.title }}</div>
 
-    {{ content.body|raw }}
+        {{ content.body|raw }}
+
+    {% else %}
+        <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+            Whoops! We cannot find what you're looking for!
+                </h1>
+                <h2 class="subtitle">
+                    {{ isset(error) ? error : null }}
+                </h2>
+            </div>
+        </div>
+        </section>
+    {% endif %}
 {% endblock %}
