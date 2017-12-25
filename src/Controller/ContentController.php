@@ -3,16 +3,36 @@
 namespace App\Controller;
 
 use App\Entity\Content;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ContentRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class ContentController extends AbstractController
+class ContentController extends BaseController
 {
+    protected $contentRepository;
+
+    public function __construct(ContentRepository $contentRepository)
+    {
+        $this->contentRepository = $contentRepository;
+    }
+
+
+    /**
+     * @param Request $request
+     * @param $slug
+     * @return Response
+     * @throws \Doctrine\ORM\NoResultException
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function index(Request $request,$slug)
     {
-        $content = $this->getDoctrine()->getManager()->find(Content::class,1);
+        try
+        {
+            $content = $this->contentRepository->findOneByReference($slug);
+        } catch (\Exception $e)
+        {
+            return $this->error($e);
+        }
 
         return $this->render('theme/default/content.html.twig',['content' => $content]);
     }

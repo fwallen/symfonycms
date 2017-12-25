@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">
+                    Whoops! We could not find what you are looking for!
+                </h1>
+                {% if(is_granted('ROLE_ADMIN')) %}
+                    <h2 class="subtitle">
+                        {{ error.message }}
+                    </h2>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
