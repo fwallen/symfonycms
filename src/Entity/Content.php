@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\Traits\Timestampable;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -51,6 +52,13 @@ class Content
     private $status;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=400, nullable=true)
+     */
+    private $path;
+
+    /**
      * @var boolean
      *
      * @ORM\Column(type="boolean",options={"default"=true})
@@ -63,6 +71,23 @@ class Content
      * @ORM\Column(type="datetime", name="deleted_at", nullable=true)
      */
     private $deletedAt;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="App\Entity\Permission")
+     * @ORM\JoinTable(name="content_permissions",
+     *     joinColumns={@ORM\JoinColumn(name="content_id",referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="permission_id",referencedColumnName="id")}
+     *     )
+     */
+    private $permissions;
+
+    public function __construct()
+    {
+        $this->permissions = new ArrayCollection();
+    }
+
 
     /**
      * @return mixed
@@ -224,6 +249,14 @@ class Content
     {
         $this->deletedAt = $deletedAt;
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getPermissions(): ArrayCollection
+    {
+        return $this->permissions;
     }
 
 
