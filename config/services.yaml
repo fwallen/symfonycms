@@ -32,7 +32,11 @@ services:
         tags:
             - { name: security.voter }
 
-    fixture_admin:
-        class: App\DataFixtures\AdminFixture
+    fixture_content:
+        class: App\DataFixtures\ContentFixture
+        tags:
+            - { name: doctrine.fixture.orm }
+    fixture_user_group:
+        class: App\DataFixtures\UserGroupFixture
         tags:
             - { name: doctrine.fixture.orm }

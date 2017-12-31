@@ -259,5 +259,23 @@ class Content
         return $this->permissions;
     }
 
+    /**
+     * @return string
+     */
+    public function getPath(): string
+    {
+        return $this->path;
+    }
+
+    /**
+     * @param string $path
+     * @return Content
+     */
+    public function setPath(string $path): Content
+    {
+        $this->path = $path;
+        return $this;
+    }
+
 
 }

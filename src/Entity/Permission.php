@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Permission
 {
+
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id

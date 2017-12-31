@@ -7,21 +7,45 @@ parameters:
 
 doctrine:
     dbal:
-        # configure these for your database server
-        driver: 'pdo_mysql'
-        server_version: '5.7'
-        charset: utf8mb4
+        default_connection: default
+        connections:
+            default:
+                # configure these for your database server
+                driver: 'pdo_mysql'
+                server_version: '5.7'
+                charset: utf8mb4
+                # With Symfony 3.3, remove the `resolve:` prefix
+                url: '%env(resolve:DATABASE_URL)%'
 
-        # With Symfony 3.3, remove the `resolve:` prefix
-        url: '%env(resolve:DATABASE_URL)%'
+            testing:
+                # configure these for your database server
+                driver: 'pdo_mysql'
+                server_version: '5.7'
+                charset: utf8mb4
+                # With Symfony 3.3, remove the `resolve:` prefix
+                url: '%env(resolve:TEST_DATABASE_URL)%'
+
     orm:
         auto_generate_proxy_classes: '%kernel.debug%'
-        naming_strategy: doctrine.orm.naming_strategy.underscore
-        auto_mapping: true
-        mappings:
-            App:
-                is_bundle: false
-                type: annotation
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+        entity_managers:
+            default:
+                connection: default
+                auto_mapping: true
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                mappings:
+                    App:
+                        is_bundle: false
+                        type: annotation
+                        dir: '%kernel.project_dir%/src/Entity'
+                        prefix: 'App\Entity'
+                        alias: App
+            testing:
+                connection: testing
+                naming_strategy: doctrine.orm.naming_strategy.underscore
+                mappings:
+                    App:
+                        is_bundle: false
+                        type: annotation
+                        dir: '%kernel.project_dir%/src/Entity'
+                        prefix: 'App\Entity'
+                        alias: App

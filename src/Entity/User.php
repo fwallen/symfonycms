@@ -78,6 +78,11 @@ class User implements UserInterface, \Serializable
     private $roles;
 
     /**
+     * @ORM\OneToMany(targetEntity="UserGroup", mappedBy="owner")
+     */
+    private $groups;
+
+    /**
      * @ORM\Column(type="datetime",name="deleted_at",nullable=true)
      */
     private $deletedAt;
@@ -85,9 +90,9 @@ class User implements UserInterface, \Serializable
     public function __construct()
     {
         $this->isActive = true;
-        $this->roles = new ArrayCollection();
+        $this->roles    = new ArrayCollection();
+        $this->groups   = new ArrayCollection();
     }
-
 
 
     public function getSalt()
@@ -104,7 +109,7 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        $roles = $this->roles->map(function($role) {
+        $roles = $this->roles->map(function ($role) {
             return $role->getName();
         })->toArray();
 
@@ -118,13 +123,13 @@ class User implements UserInterface, \Serializable
     /** @see \Serializable::serialize() */
     public function serialize()
     {
-        return serialize(array(
+        return serialize([
             $this->id,
             $this->username,
             $this->password,
             // see section on salt below
             // $this->salt,
-        ));
+        ]);
     }
 
     /** @see \Serializable::unserialize() */
@@ -173,7 +178,7 @@ class User implements UserInterface, \Serializable
 
     public function hasRole($role)
     {
-        return in_array($role,$this->getRoles());
+        return in_array($role, $this->getRoles());
     }
 
     /**
@@ -188,7 +193,7 @@ class User implements UserInterface, \Serializable
      * @param \DateTime $createdAt
      * @return User
      */
-    public function setCreatedAt( \DateTime $createdAt ): User
+    public function setCreatedAt(\DateTime $createdAt): User
     {
         $this->createdAt = $createdAt;
         return $this;
@@ -206,7 +211,7 @@ class User implements UserInterface, \Serializable
      * @param \DateTime $updatedAt
      * @return User
      */
-    public function setUpdatedAt( \DateTime $updatedAt ): User
+    public function setUpdatedAt(\DateTime $updatedAt): User
     {
         $this->updatedAt = $updatedAt;
         return $this;
@@ -224,7 +229,7 @@ class User implements UserInterface, \Serializable
      * @param mixed $firstName
      * @return User
      */
-    public function setFirstName( $firstName )
+    public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
         return $this;
@@ -242,7 +247,7 @@ class User implements UserInterface, \Serializable
      * @param mixed $lastName
      * @return User
      */
-    public function setLastName( $lastName )
+    public function setLastName($lastName)
     {
         $this->lastName = $lastName;
         return $this;
@@ -260,7 +265,7 @@ class User implements UserInterface, \Serializable
      * @param mixed $deletedAt
      * @return User
      */
-    public function setDeletedAt( $deletedAt )
+    public function setDeletedAt($deletedAt)
     {
         $this->deletedAt = $deletedAt;
         return $this;
@@ -270,7 +275,7 @@ class User implements UserInterface, \Serializable
      * @param mixed $id
      * @return User
      */
-    public function setId( $id )
+    public function setId($id)
     {
         $this->id = $id;
         return $this;
@@ -280,7 +285,7 @@ class User implements UserInterface, \Serializable
      * @param mixed $username
      * @return User
      */
-    public function setUsername( $username )
+    public function setUsername($username)
     {
         $this->username = $username;
         return $this;
@@ -290,7 +295,7 @@ class User implements UserInterface, \Serializable
      * @param mixed $password
      * @return User
      */
-    public function setPassword( $password )
+    public function setPassword($password)
     {
         $this->password = $password;
         return $this;
@@ -300,7 +305,7 @@ class User implements UserInterface, \Serializable
      * @param mixed $plainPassword
      * @return User
      */
-    public function setPlainPassword( $plainPassword )
+    public function setPlainPassword($plainPassword)
     {
         $this->plainPassword = $plainPassword;
         return $this;
@@ -310,7 +315,7 @@ class User implements UserInterface, \Serializable
      * @param mixed $email
      * @return User
      */
-    public function setEmail( $email )
+    public function setEmail($email)
     {
         $this->email = $email;
         return $this;
@@ -320,7 +325,7 @@ class User implements UserInterface, \Serializable
      * @param mixed $isActive
      * @return User
      */
-    public function setIsActive( $isActive )
+    public function setIsActive($isActive)
     {
         $this->isActive = $isActive;
         return $this;
@@ -328,7 +333,7 @@ class User implements UserInterface, \Serializable
 
     public function getUsername()
     {
-       return $this->username;
+        return $this->username;
     }
 
     public function addRole(Role $role)
@@ -336,4 +341,8 @@ class User implements UserInterface, \Serializable
         $this->roles->add($role);
     }
 
+    public function getGroups()
+    {
+        return $this->groups;
+    }
 }
