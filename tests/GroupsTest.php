@@ -38,7 +38,19 @@ class GroupsTest extends WebTestCase
         $this->em->persist($group);
         $this->em->flush();
 
+
         return $group;
+    }
+
+    protected function addUserToGroup(UserGroup $group)
+    {
+        $user = $this->createUser();
+        $group->addUser($user);
+        $this->em->flush();
+        $this->em->refresh($user);
+        $this->em->refresh($group);
+
+        return $user;
     }
 
     public function testAssignUserToNewUserGroup()
@@ -52,6 +64,7 @@ class GroupsTest extends WebTestCase
 
         $group->addUser($newUser);
         $this->em->flush();
+        $this->em->refresh($newUser);
 
         $freshGroup = $this->em->getRepository(UserGroup::class)->find($group->getId());
         $this->assertTrue($freshGroup->getUsers()->contains($newUser));
@@ -68,6 +81,14 @@ class GroupsTest extends WebTestCase
         $this->em->flush();
 
         $this->assertTrue($this->em->getRepository(UserGroup::class)->hasPermission($group,'CONTENT_VIEW'));
+        $this->assertFalse($this->em->getRepository(UserGroup::class)->hasPermission($group,'CONTENT_EDIT'));
+
+        $user = $this->addUserToGroup($group);
+        $this->em->flush();
+        $this->em->refresh($user);
+        $group = $this->em->getRepository(UserGroup::class)->find($group->getId());
+
+        $this->assertTrue($user->hasPermission('CONTENT_VIEW'),'User has permission "CONTENT_VIEW"');
     }
 
     public function testRemovePermissionFromGroup()

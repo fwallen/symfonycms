@@ -42,7 +42,7 @@ class UserGroup
     private $owner;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="groupMembership")
      * @ORM\JoinTable(name="user_group_users",
      *     joinColumns={@ORM\JoinColumn(name="group_id",referencedColumnName="id")},
      *     inverseJoinColumns={@ORM\JoinColumn(name="user_id",referencedColumnName="id")}
@@ -141,7 +141,7 @@ class UserGroup
 
     public function addUser(User $user)
     {
-        $this->getUsers()->add($user);
+        $this->users->add($user);
     }
 
     /**
@@ -154,12 +154,12 @@ class UserGroup
 
     public function addPermission(Permission $permission)
     {
-        $this->getPermissions()->add($permission);
+        $this->permissions->add($permission);
     }
 
     public function removePermission(Permission $permission)
     {
-        return $this->getPermissions()->removeElement($permission);
+        return $this->permissions->removeElement($permission);
     }
 
 }

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\Traits\Timestampable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -83,6 +84,11 @@ class User implements UserInterface, \Serializable
     private $groups;
 
     /**
+     * @ORM\ManyToMany(targetEntity="UserGroup", mappedBy="users")
+     */
+    private $groupMembership;
+
+    /**
      * @ORM\Column(type="datetime",name="deleted_at",nullable=true)
      */
     private $deletedAt;
@@ -92,6 +98,7 @@ class User implements UserInterface, \Serializable
         $this->isActive = true;
         $this->roles    = new ArrayCollection();
         $this->groups   = new ArrayCollection();
+        $this->groupMembership = new ArrayCollection();
     }
 
 
@@ -336,13 +343,54 @@ class User implements UserInterface, \Serializable
         return $this->username;
     }
 
+    /**
+     * @return PersistentCollection|UserGroup[]
+     */
+    public function getGroupMembership()
+    {
+        return $this->groupMembership;
+    }
+
+    /**
+     * @param mixed $groupMembership
+     * @return User
+     */
+    public function setGroupMembership($groupMembership)
+    {
+        $this->groupMembership = $groupMembership;
+        return $this;
+    }
+
+
     public function addRole(Role $role)
     {
         $this->roles->add($role);
     }
 
+    /**
+     * @return UserGroup[]
+     */
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    public function getPermissions()
+    {
+        $permissions = [];
+        foreach($this->getGroupMembership() as $group)
+        {
+            $groupPermissions = $group->getPermissions()->map(function($permission) {
+                return $permission->getName();
+            });
+            $permissions = array_merge($permissions,$groupPermissions->toArray());
+        }
+
+        return $permissions;
+    }
+
+    public function hasPermission($name)
+    {
+        return in_array(strtoupper($name),$this->getPermissions());
     }
 }
